@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static "fume/purchase.css" %}" />
+
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="clearfix">
+          <ul class="login">
+            <li><a href="#">Log In</a></li>
+            <li><a href="#">Sign In</a></li>
+          </ul>
+        </div>
+        <ul class="menu">
+          <li><a href="#">Search</a></li>
+          <li><a href="#">Forum</a></li>
+          <li><a href="#">Featured</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="smallContainer clearfix">
+
+        <h2>Cart</h2>
+        <h3>There are 2 games in your cart</h3>
+
+        <div class="items">
+          <div class="item clearfix">
+            <h3 class="name">Name: Far Cry Primal</h3>
+            <h4 class="price">Price: $50</h4>
+            <h4 class="amount">Amount: 1</h4>
+          </div>
+
+          <div class="item clearfix">
+            <h3 class="name">Name: GTA 5</h3>
+            <h4 class="price">Price: $60</h4>
+            <h4 class="amount">Amount: 1</h4>
+          </div>
+        </div>
+
+        <h3 class="gameTotal">Game Price total is: $110</h3>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="smallContainer clearfix">
+        <div class="rewardStatus">
+          <div class="reward clearfix">
+            <h3>Reward Status</h3>
+            <h4 class="rewardNotice">You have 3 rewards</h4>
+            <h4 class="rewardAsk">How many rewards do you want to use?</h4>
+            <h4 class="enterReward">Enter reward amount</h4>
+            <input class="rewardInput" type="text" name="reward" value="0">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="smallContainer clearfix">
+        <div class="total clearfix">
+          <h3 class="tamount">Total Amount:</h3>
+          <h4 class="tprice">$110</h4>
+        </div>
+        <input class="purchaseButton" type="submit" name="Purchase">
+      </div>
+    </div>
+
+
+
+  </body>
+</html>
