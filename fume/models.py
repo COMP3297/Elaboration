@@ -6,8 +6,7 @@ from django.db import models
 class Game(models.Model):
     game = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    def __str__(self):
-        return self.game
+
 
 
 class User(models.Model):
@@ -35,6 +34,8 @@ class Purchase(models.Model):
     userId = models.ForeignKey(User)
     game = models.ForeignKey(Game)
 
+class Cart(models.Model):
+    game = models.ForeignKey(Game)
 
 
     
