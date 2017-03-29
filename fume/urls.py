@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^games/(?P<game_id>\d+)/$', views.games, name='games'),
     url(r'^purchase/(?P<game_id>\d+)/$', views.purchase, name='purchase'),
     url(r'^purchaseAll$', views.purchaseAll, name='purchaseAll'),
+    url(r'^tag/(?P<game_id>\d+)/$', views.tagedit, name='tagedit'),
     ]

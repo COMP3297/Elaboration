@@ -8,7 +8,6 @@ class Game(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
 
-
 class User(models.Model):
     name = models.CharField(max_length=200)
     userId = models.CharField(max_length=200)
@@ -24,11 +23,10 @@ class Tag(models.Model):
 
     
 class Tagging(models.Model):
-    userId = models.ForeignKey(User)
+    #userId = models.ForeignKey(User)
     tag = models.ForeignKey(Tag)
     def __str__(self):
-        return self.userId
-
+        return self.tag
     
 class Purchase(models.Model):
     userId = models.ForeignKey(User)
@@ -37,5 +35,3 @@ class Purchase(models.Model):
 class Cart(models.Model):
     game = models.ForeignKey(Game)
 
-
-    

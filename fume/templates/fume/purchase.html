@@ -36,7 +36,7 @@
           <div class="item clearfix">
             <h3 class="name">Name: {{ gme.game.game }}</h3>
             <h4 class="price">Price: ${{ gme.game.price }}</h4>
-            <h4 class="amount">Amount: {{ amount }}</h4>
+            <h4 class="amount">Amount: 1</h4>
           </div>
           {% endfor %}
               
@@ -68,7 +68,7 @@
         </div>
         <form action="/purchaseAll" method="post">
           {% csrf_token %}
-          <input class="purchaseButton" type="submit" name="Purchase">
+          <input class="purchaseButton" type="submit" value="Purchase">
         </form>
       </div>
     </div>
