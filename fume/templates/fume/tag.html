@@ -5,10 +5,20 @@
     <input type="submit" value="Submit"/>
 </form>
 -->
+<!DOCTYPE html>
+	<html>
+		<head>
 
-<form action="/games/{{tag_id}}/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    Write Tag name:<input type="text" name="tag_name"/>
-    <input type="submit" value="Submit" />
-</form>
+		</head>
+		<body>
+			<h1>Add Tag</h1>
+				<form action="/add_tag/{{tag_id}}/" method="post">
+				    {% csrf_token %}
+				    {{ form }}
+				    Write Tag name:<input type="text" name="tag_name"/>
+				    Creator:<input type="text" name="creator"/>	
+				    <input type="submit" value="Submit" />
+				</form>
+		</body>
+
+	</html>
