@@ -1,0 +1,24 @@
+<!--
+<form action="/addtag" method="post">
+    <input type="hidden" name="game_id" value="{{tag_id}}"/>
+    Write Tag name:<input type="text" name="tag_name"/>
+    <input type="submit" value="Submit"/>
+</form>
+-->
+<!DOCTYPE html>
+	<html>
+		<head>
+
+		</head>
+		<body>
+			<h1>Add Tag</h1>
+				<form action="/add_tag/{{tag_id}}/" method="post">
+				    {% csrf_token %}
+				    {{ form }}
+				    Write Tag name:<input type="text" name="tag_name"/>
+				    Creator:<input type="text" name="creator"/>	
+				    <input type="submit" value="Submit" />
+				</form>
+		</body>
+
+	</html>
