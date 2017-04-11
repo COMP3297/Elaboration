@@ -32,7 +32,10 @@ def signup(request):
 def games(request, game_id):
 	game = Game.objects.get(game_id=game_id)
 	tags = Tag.objects.filter(game=game).all()
-	return render(request, 'fume/gamePage.html', {'tag_id':game_id, 'tags':tags})
+	imageList = game.getImageList()
+	image1 = imageList[0]
+	image2 = imageList[1]
+	return render(request, 'fume/gamePage.html', {'tag_id':game_id, 'tags':tags,'game':game,'image1':image1,'image2':image2})
 	
 def purchase(request, game_id):
 	print("purchasing")

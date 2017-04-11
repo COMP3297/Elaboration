@@ -31,7 +31,7 @@ SECRET_KEY = 'vinn8)0amr@4ojze9=fafs(qw#ozr*j12xcad_s@qz+@2fg$st'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost',]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -127,4 +128,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+
+#MEDIA_URL = '/static/fume/'
+
+
+
+#STATIC_URL = '/static/'
+
+PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
+SITE_ROOT = PROJECT_ROOT
+
+
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+MEDIA_URL = '/media/'
+
+
+STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    os.path.join(SITE_ROOT, 'images'),
+    
+)
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_ROOT, 'templates'),
+)

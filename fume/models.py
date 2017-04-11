@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
+from PIL import Image
 
 # Create your models here.
 class Game(models.Model):
@@ -8,8 +9,19 @@ class Game(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2,blank=True, null=True)
     game_id = models.CharField(max_length=200,blank=True, null=True)
     gameDescription = models.TextField(blank=True)
+    def getImageList(self):
+        images = GameImage.objects.filter(game=self).all()
+        
+
+        return images
+
     def __str__(self):
         return self.game
+class GameImage(models.Model):
+    image = models.ImageField(upload_to='images',blank=True)
+    game = models.ForeignKey(Game)
+    def __str__(self):
+        return self.image.name
 
 
 class Tag(models.Model):
@@ -48,6 +60,7 @@ class Cart(models.Model):
 class Reward(models.Model):
     timeReceived = models.DateTimeField(blank=True, null=True)
     amount = models.CharField(max_length=200)
+    
     def receiveReward(self):                    # to record the time when the reward is received
             self.timeReceived = timezone.now()
             self.save()

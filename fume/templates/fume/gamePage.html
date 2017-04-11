@@ -2,8 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>GTA 5</title>
-  {% load static %}
+    <title>{{game.game}}</title>
+  {% load staticfiles %}
+
   <link rel="stylesheet" type="text/css" href="{% static "fume/games.css" %}" />
   </head>
   <body>
@@ -25,7 +26,7 @@
 
     <div class="container top">
       <div class="gameImage">
-        <img class="big" src="{% static "fume/gta5.jpg" %}" alt="">
+        <img class="big" src="{{ image2.image.url }}" alt="">  
         <div class="smallImage">
           <img class="small" src="" alt="">
           <img class="small" src="" alt="">
@@ -34,8 +35,8 @@
       </div>
 
       <div class="gameIntro">
-        <img class="introImage" src="{% static "fume/gtasm.jpg" %}" alt="">
-        <p class="intro">Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows.</p>
+        <img class="introImage" src="{{  image1.image.url }}" alt="">
+        <p class="intro">{{game.gameDescription}}</p>
         <div class="tags">
           <ul class="tagging">
             <li class="tag"><a href="#">RPG</a></li>
