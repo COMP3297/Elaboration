@@ -56,6 +56,5 @@ class Administrator(models.Model):
 
 class Recommendation(models.Model):
 	userId = models.ForeignKey(User)
-	game = models.ManyToManyField(Game)
 	def __str__(self):
 		return self.userId
