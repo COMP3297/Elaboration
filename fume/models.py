@@ -16,7 +16,6 @@ class Tag(models.Model):
     tag = models.CharField(max_length=50,blank=True, null=True)
     creator = models.CharField(max_length=200,blank=True, null=True)
     game = models.ForeignKey(Game,blank=True, null=True)
-
     def __str__(self):
         return self.tag
 
@@ -58,14 +57,5 @@ class Administrator(models.Model):
 class Recommendation(models.Model):
 	userId = models.ForeignKey(User)
 	game = models.ManyToManyField(Game)
-	
-	def getRcmdList(request, tagList):
-		rcmdList = []
-		for eachTag in tagList:
-			if rcmdList.get(eachTag.game, "F") != "F":
-				rcmdList.append(eachTag.game)
-			if len(rcmdList) >= 4:
-				break
-		return rcmdList
 	def __str__(self):
 		return self.userId

@@ -5,8 +5,8 @@
   <title>Fume</title>
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static "fume/fume.css" %}" />
-
 </head>
+
 <body>
   <div class="container">
     <nav>
@@ -23,9 +23,8 @@
       </ul>
     </nav>
   </div>
-
+  
   <div class="container first">
-
     <div class="leftcontainer">
       <ul class="leftlist">
         <li class="type">Genre</li>
@@ -34,7 +33,7 @@
         <li class="item"><a href="#">Shooting</a></li>
         <li class="item"><a href="#">Strategy</a></li>
       </ul>
-
+	  
       <ul class="leftlist">
         <li class="type">Category</li>
         <li class="item"><a href="#">Top Selling</a></li>
@@ -43,15 +42,16 @@
         <li class="item"><a href="#">Early Access</a></li>
       </ul>
     </div>
-
+	
     <div class="rightcontainer">
       <div class="featured">
-        <a href="/games/2"><img class="big" src="{% static "fume/farcry.png" %}" alt=""></a>
-        <div class="right">
-          <a href="/games/3"><img class="small" src="{% static "fume/noman.jpg" %}" alt=""></a>
-          <a href="/games/1"><img class="small" src="{% static "fume/gta5.jpg" %}" alt=""></a>
-          <a href="#"><img class="small" src="{% static "fume/dota.jpg" %}" alt=""></a>
-        </div>
+
+			<a href="/games/2"><img class="big" src="{% static "fume/farcry.png" %}" alt=""></a>
+			<div class="right">
+			  <a href="/games/3"><img class="small" src="{% static "fume/noman.jpg" %}" alt=""></a>
+			  <a href="/games/1"><img class="small" src="{% static "fume/gta5.jpg" %}" alt=""></a>
+			  <a href="#"><img class="small" src="{% static "fume/dota.jpg" %}" alt=""></a>
+			</div>
       </div>
 
       <div class="smallFeatured">
@@ -62,28 +62,40 @@
       </div>
 
       <div class="recommended">
-        <div class="recItem">
-          <a href="/games/2"><img class="small" src="{% static "fume/farcry.png" %}" alt=""></a>
-          <div class="text">
-            <a href="/games/2"><h4>This is Far Cry Primal</h4></a>
-            <p>Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. </p>
-          </div>
-        </div>
+		{% if rcmdList %}
+			{% for eachGame in rcmdList %}
+				<div class="recItem">
+				  <a href="/games/{{eachGame.game}}"><img class="small" src="{% static "fume/{{eachGame.game}}.png" %}" alt=""></a>
+				  <div class="text">
+					<a href="/games/{{eachGame.game}}"><h4>This is {{eachGame.game}}</h4></a>
+					<p>{{eachGame.gameDescription}} </p>
+				  </div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="recItem">
+			  <a href="/games/2"><img class="small" src="{% static "fume/farcry.png" %}" alt=""></a>
+			  <div class="text">
+				<a href="/games/2"><h4>This is Far Cry Primal</h4></a>
+				<p>Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. </p>
+			  </div>
+			</div>
 
-        <div class="recItem">
-          <a href="/games/3"><img class="small" src="{% static "fume/noman.jpg" %}" alt=""></a>
-          <div class="text">
-            <a href="/games/3"><h4>No Man's Sky</h4></a>
-            <p>Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. </p>
-          </div>
-        </div>
+			<div class="recItem">
+			  <a href="/games/3"><img class="small" src="{% static "fume/noman.jpg" %}" alt=""></a>
+			  <div class="text">
+				<a href="/games/3"><h4>No Man's Sky</h4></a>
+				<p>Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. </p>
+			  </div>
+			</div>
 
-        <div class="recItem">
-          <a href="/games/1"><img class="small" src="{% static "fume/gta5.jpg" %}" alt=""></a>
-          <div class="text">
-            <a href="/games/1"><h4>GTA 5</h4></a>
-            <p>Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. </p>
-          </div>
+			<div class="recItem">
+			  <a href="/games/1"><img class="small" src="{% static "fume/gta5.jpg" %}" alt=""></a>
+			  <div class="text">
+				<a href="/games/1"><h4>GTA 5</h4></a>
+				<p>Grand Theft Auto V is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was released on 17 September 2013 for the PlayStation 3 and Xbox 360, on 18 November 2014 for the PlayStation 4 and Xbox One, and on 14 April 2015 for Microsoft Windows. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. </p>
+			  </div>
+			{% endif %}
         </div>
       </div>
     </div>
