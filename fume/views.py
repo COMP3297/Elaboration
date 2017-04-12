@@ -9,6 +9,7 @@ from fume.forms import LoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from fume.forms import SignUpForm
+from django.contrib.auth.decorators import login_required
 
 
 	
@@ -48,8 +49,6 @@ def purchase(request, game_id):
 	games = this_cart.game.all()
 	totalAmount = this_cart.getTotal()
 
-
-
 	return render(request, 'fume/purchase.html', {'games': games, 'amount': amount, 'totalAmount': totalAmount,'form':form})
 
 def purchaseAll(request):
@@ -63,6 +62,9 @@ def tagedit(request, game_id):
 	tag_id=game_id
 	return render(request, 'fume/tag.html', {'tag_id':game_id})
 
+@login_required
+def home(request):
+    return render(request, 'core/home.html')
 
 def addtag(request, game_id):
 	print ("adding tag")
@@ -93,9 +95,6 @@ def addtag(request, game_id):
 	else:
 		return redirect('games',game_id=game_id)
 
-<<<<<<< HEAD
-	
-=======
 """
 def getRcmdList(tagList):
 	rcmdList = []
@@ -107,9 +106,11 @@ def getRcmdList(tagList):
 			break
 	return rcmdList
 """
+
+"""
 def featured(request):
 	# Get a list of tags from user purchase history
-	"""
+
 	# Look for games that are affliated with the tags
 	rcmdList = []
 	for eachTag in tagList:
@@ -118,6 +119,5 @@ def featured(request):
 			rcmdList.append(eachTag.game)
 		if len(rcmdList) >= 4:
 			break
-	"""
 	return render(request, 'fume/featured.html')
->>>>>>> 52b154ec4840e84ad88705a2ab4536d91d6c1c06
+"""
