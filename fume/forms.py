@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 class NameForm(forms.Form):
     tag_name = forms.CharField(label='tag_name', max_length=100)
     creator = forms.CharField(label='creator', max_length=100)
-    
+
 class LoginForm(forms.Form):
     email = forms.CharField(label=(u'Email'), max_length=30)
     password = forms.CharField(label=(u'Password'), widget=forms.PasswordInput(render_value=False), max_length=30)
-    
+
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
@@ -17,3 +17,10 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+
+
+
+class PlatformForm(forms.Form):
+    PlatformChoice = ('Windows','Mac','Linux')
+    platform = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=PlatformChoice)
