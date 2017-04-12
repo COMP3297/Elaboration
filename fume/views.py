@@ -40,8 +40,9 @@ def games(request, game_id):
 	return render(request, 'fume/gamePage.html', {'tag_id':game_id, 'tags':tags,'game':game,'image1':image1,'image2':image2})
 
 @login_required
-def purchase(request, game_id, user_id):
+def purchase(request, game_id):
 	print("purchasing")
+	user_id=request.user
 	newgame=Game.objects.get(game_id=game_id)
 	user = User.objects.get(username=user_id)
 	this_cart = Cart.objects.get(user = user)

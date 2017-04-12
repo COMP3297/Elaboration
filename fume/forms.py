@@ -19,8 +19,6 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
 
 
-
-
 class PlatformForm(forms.Form):
     PlatformChoice = ('Windows','Mac','Linux')
     platform = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=PlatformChoice)
