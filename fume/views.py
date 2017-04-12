@@ -30,15 +30,16 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+@login_required
 def games(request, game_id):
 	game = Game.objects.get(game_id=game_id)
 	tags = Tag.objects.filter(game=game).all()
-
 	imageList = game.getImageList()
 	image1 = imageList[0]
 	image2 = imageList[1]
 	return render(request, 'fume/gamePage.html', {'tag_id':game_id, 'tags':tags,'game':game,'image1':image1,'image2':image2})
 
+@login_required
 def purchase(request, game_id):
 	print("purchasing")
 	newgame=Game.objects.get(game_id=game_id)
@@ -64,8 +65,9 @@ def tagedit(request, game_id):
 
 @login_required
 def home(request):
-    return render(request, 'core/home.html')
+    return render(request, 'home.html')
 
+@login_required
 def addtag(request, game_id):
 	print ("adding tag")
 # if this is a POST request we need to process the form data
