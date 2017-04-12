@@ -3,8 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from PIL import Image
 
-class Member(User):
-        pass
+
 # Create your models here.
 class Game(models.Model):
     game = models.CharField(max_length=200,blank=True, null=True)
@@ -35,28 +34,34 @@ class GameImage(models.Model):
 class Tag(models.Model):
     tag = models.CharField(max_length=50,blank=True, null=True)
     creator = models.CharField(max_length=200,blank=True, null=True)
-    game = models.ManyToManyField(Game,blank=True, null=True)
+    game = models.ManyToManyField(Game,blank=True)
     def __str__(self):
         return self.tag
 
 
-class Tagging(models.Model):
-    #userId = models.ForeignKey(User)
-    tag = models.ManyToManyField(Tag,blank=True)
+
+class Platform(models.Model):
+    PlatformName = models.CharField(max_length=100,blank=True,null=True)
     def __str__(self):
-        return self.tag
+        return self.PlatformName
 
 class Purchase(models.Model):
+    pTime = models.CharField(max_length=100,blank=True,null=True)
     userId = models.ForeignKey(User,blank=True, null=True)
-    game = models.ManyToManyField(Game,blank=True, null=True)
-#    Platform = models.ForeignKey(Platform)
-
-#class Platform(models.model):
-#    PlatformName = models.CharField(max_length=100,blank=True,null=True)
+    game = models.ManyToManyField(Game,blank=True)
+    platform = models.ForeignKey(Platform,blank=True,null=True)
+    def __str__(self):
+        return str(self.pTime)
+    def addGame(self,cart):
+        games = cart.game.all()
+        for gme in games:
+            g = Game.objects.get(game=gme)
+            self.game.add(g)
+        
 
 class Cart(models.Model):
     user = models.ForeignKey(User,blank=True,null=True)
-    game = models.ManyToManyField(Game,blank=True,null=True)
+    game = models.ManyToManyField(Game,blank=True)
     def addGame(self,game):
         self.game.add(game)
     def getTotal(self):
@@ -67,6 +72,9 @@ class Cart(models.Model):
             price = Game.objects.get(game=gme).price
             totalAmount = totalAmount + price
         return totalAmount
+    def getGameList(self):
+
+            return self.game
 
 class Reward(models.Model):
     user = models.ForeignKey(User,blank=True,null=True)
@@ -87,4 +95,5 @@ class Administrator(models.Model):
 class Recommendation(models.Model):
 	userId = models.ForeignKey(User)
 	def __str__(self):
-		return self.User
+		return self.userId.first_name + self.userId.last_name
+    
