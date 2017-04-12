@@ -19,8 +19,6 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
 
 
-
-
 class PlatformForm(forms.Form):
     PlatformChoice = [
         ('WINDOWS','Windows'),

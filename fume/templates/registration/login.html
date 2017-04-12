@@ -1,6 +1,4 @@
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
   <h2>Login</h2>
   <form method="post">
@@ -8,4 +6,7 @@
     {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
+  <br>
+  <p><strong>-- OR --</strong></p>
+  <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
 {% endblock %}
