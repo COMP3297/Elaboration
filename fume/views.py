@@ -118,7 +118,7 @@ def addtag(request, game_id):
 	else:
 		return redirect('games',game_id=game_id)
 
-
+@login_required
 def featured(request):
 
 	currentUser = request.user
@@ -149,9 +149,10 @@ def featured(request):
 	# Sort similarity_dic according to count
 	sorted_tup = sorted(similarity_dic.items(), key=operator.itemgetter(1))
 
-
+	print(sorted_tup)
 	# Put four games into rcmdList
 	for i in [0,1,2,3]:
-		rcmdList[i] = sorted_tup[len(sorted_tup)-i-1][0]
+		print(sorted_tup[len(sorted_tup)-i-1][0])
+		rcmdList.append(sorted_tup[len(sorted_tup)-i-1][0])
 
-	return render(request, 'fume/featured.html', rcmdList)
+	return render(request, 'fume/featured.html', {'rcmdList':rcmdList})
