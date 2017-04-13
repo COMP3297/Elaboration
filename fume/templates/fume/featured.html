@@ -67,12 +67,13 @@
       </div>
 
       <div class="recommended">
+        <h2>Recommended For You </h2>
 		{% if rcmdList %}
 			{% for eachGame in rcmdList %}
 				<div class="recItem">
-				  <a href="/games/{{eachGame.game}}"><img class="small" src="{% static "fume/{{eachGame.game}}.png" %}" alt=""></a>
+				  <a href="/games/{{eachGame.game}}"><img class="small" src="{{eachGame.getImageList.0.image.url}}" alt=""></a>
 				  <div class="text">
-					<a href="/games/{{eachGame.game}}"><h4>This is {{eachGame.game}}</h4></a>
+					<h4>{{eachGame.game}}</h4>
 					<p>{{eachGame.gameDescription}} </p>
 				  </div>
 				</div>
