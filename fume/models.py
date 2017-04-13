@@ -98,6 +98,10 @@ class Cart(models.Model):
     def getGameList(self):
 
             return self.game
+    def clearCart(self):
+        games = self.game.all()
+        for g in games:
+            self.game.remove(g)
 
 class Reward(models.Model):
     user = models.ForeignKey(User,blank=True,null=True)

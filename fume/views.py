@@ -14,11 +14,6 @@ from django.contrib.auth.decorators import login_required
 
 
 	
-def featured(request):
-	user = request.user
-	purchasehis=getUserPurchaseHistory(user)
-	print(purchasehis)
-	return render(request, 'fume/featured.html', {})
 	
 def signup(request):
 	if request.method == 'POST':
@@ -47,8 +42,10 @@ def games(request, game_id):
 def purchase(request, game_id):
 	print("purchasing")
 	user_id=request.user
+
 	newgame=Game.objects.get(game_id=game_id)
 	user = request.user
+	print(user)
 	try:
 		this_cart = Cart.objects.get(user = user)
 	except:
@@ -62,8 +59,10 @@ def purchase(request, game_id):
 
 	return render(request, 'fume/purchase.html', {'games': games, 'amount': amount, 'totalAmount': totalAmount,"form":form})
 
+@login_required
 def purchaseAll(request):
 	user = request.user
+	print(user)
 	cart = Cart.objects.get(user=user)
 	game = cart.getGameList()
 	form = PlatformForm(request.POST)
@@ -74,10 +73,9 @@ def purchaseAll(request):
 	newPurchase = Purchase(pTime=ptime,userId=user,platform=platformObj)
 	newPurchase.save()
 	newPurchase.addGame(cart)
-	
-	
-	cart.delete()
-	return render(request, 'fume/featured.html', {})
+
+	cart.clearCart()
+	return redirect('featured')
 
 def tagedit(request, game_id):
 	tag_id=game_id
@@ -90,6 +88,7 @@ def home(request):
 @login_required
 def addtag(request, game_id):
 	user = request.user
+	print(user)
 	print ("adding tag")
 # if this is a POST request we need to process the form data
 	if request.method == 'POST':
@@ -122,7 +121,7 @@ def addtag(request, game_id):
 def featured(request):
 
 	currentUser = request.user
-	
+	print(currentUser)
 	### Get a list of tags from user purchase history ###
 	# Create a tag list
 	tagList = []
