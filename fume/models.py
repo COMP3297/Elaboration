@@ -4,6 +4,22 @@ from django.db import models
 from PIL import Image
 
 
+def getUserPurchaseHistory(user):     #take a user object as argument
+    #this function is to get the purchase history of a user
+    purchases = Purchase.objects.filter(userId=user).all()
+    purchaselist = list(purchases)
+    gamePurchased = []
+    for p in purchaselist:
+        games = p.game.all()
+        for g in games:
+            theGame = Game.objects.get(game=g)
+            if theGame in gamePurchased:
+                print("already in ")
+            else:
+                gamePurchased.append(theGame)
+
+    return gamePurchased
+
 # Create your models here.
 class Game(models.Model):
     game = models.CharField(max_length=200,blank=True, null=True)
@@ -23,7 +39,14 @@ class Game(models.Model):
             except:
                 tag_obj = Tag(tag=tag,creator=creator)
                 tag_obj.save()
-            tag_obj.game.add(this_game)
+            tag_obj.game.add(self)
+    def relatedTags(self):
+            tags = Tag.objects.filter(game=self)
+            tagcontext = []
+            for t in tags:
+                tagcontext.append(t.tag)
+            return tagcontext
+
 class GameImage(models.Model):
     image = models.ImageField(upload_to='images',blank=True)
     game = models.ForeignKey(Game)
@@ -33,7 +56,7 @@ class GameImage(models.Model):
 
 class Tag(models.Model):
     tag = models.CharField(max_length=50,blank=True, null=True)
-    creator = models.CharField(max_length=200,blank=True, null=True)
+    creator = models.ForeignKey(User,blank=True, null=True)
     game = models.ManyToManyField(Game,blank=True)
     def __str__(self):
         return self.tag

@@ -15,6 +15,9 @@ from django.contrib.auth.decorators import login_required
 
 	
 def featured(request):
+	user = request.user
+	purchasehis=getUserPurchaseHistory(user)
+	print(purchasehis)
 	return render(request, 'fume/featured.html', {})
 	
 def signup(request):
@@ -57,7 +60,7 @@ def purchase(request, game_id):
 	totalAmount = this_cart.getTotal()
 	form = PlatformForm(request.POST)
 
-	return render(request, 'fume/purchase.html', {'games': games, 'amount': amount, 'totalAmount': totalAmount})
+	return render(request, 'fume/purchase.html', {'games': games, 'amount': amount, 'totalAmount': totalAmount,"form":form})
 
 def purchaseAll(request):
 	user = request.user
@@ -86,6 +89,7 @@ def home(request):
 
 @login_required
 def addtag(request, game_id):
+	user = request.user
 	print ("adding tag")
 # if this is a POST request we need to process the form data
 	if request.method == 'POST':
@@ -99,7 +103,7 @@ def addtag(request, game_id):
 				# ...
 
 			tag = form['tag_name'].data;
-			creator = form['creator'].data;
+			creator = user
 			this_game = Game.objects.get(game_id=game_id)
 			#creator = request.POST.get('creator','')
 			this_game.addTag(tag,creator)

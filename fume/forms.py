@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class NameForm(forms.Form):
     tag_name = forms.CharField(label='tag_name', max_length=100)
-    creator = forms.CharField(label='creator', max_length=100)
 
 class LoginForm(forms.Form):
     email = forms.CharField(label=(u'Email'), max_length=30)
