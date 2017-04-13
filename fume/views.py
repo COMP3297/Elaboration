@@ -161,9 +161,8 @@ def featured(request):
 	# Sort similarity_dic according to count
 	sorted_tup = sorted(similarity_dic.items(), key=operator.itemgetter(1))
 
-	# Put at most four games into rcmdList
-	i = 0
-	while i <= len(sorted_tup) and i <= 3:
+	# Put four games into rcmdList
+	for i in [0,1,2,3]:
 		rcmdList[i] = sorted_tup[len(sorted_tup)-i-1][0]
 
 	return render(request, 'fume/featured.html', rcmdList)
