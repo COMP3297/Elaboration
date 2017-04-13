@@ -45,7 +45,7 @@ def purchase(request, game_id):
 
 	newgame=Game.objects.get(game_id=game_id)
 	user = request.user
-	print(user)
+	print(user)	
 	try:
 		this_cart = Cart.objects.get(user = user)
 	except:
