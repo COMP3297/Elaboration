@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform,getUserPurchaseHistory
+from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform,getUserPurchaseHistory, Reward
 from fume.forms import LoginForm,NameForm,PlatformForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -14,11 +14,6 @@ from django.contrib.auth.decorators import login_required
 
 
 	
-def featured(request):
-	user = request.user
-	purchasehis=getUserPurchaseHistory(user)
-	print(purchasehis)
-	return render(request, 'fume/featured.html', {})
 	
 def signup(request):
 	if request.method == 'POST':
@@ -47,8 +42,10 @@ def games(request, game_id):
 def purchase(request, game_id):
 	print("purchasing")
 	user_id=request.user
+
 	newgame=Game.objects.get(game_id=game_id)
 	user = request.user
+	print(user)
 	try:
 		this_cart = Cart.objects.get(user = user)
 	except:
@@ -62,8 +59,10 @@ def purchase(request, game_id):
 
 	return render(request, 'fume/purchase.html', {'games': games, 'amount': amount, 'totalAmount': totalAmount,"form":form})
 
+@login_required
 def purchaseAll(request):
 	user = request.user
+	print(user)
 	cart = Cart.objects.get(user=user)
 	game = cart.getGameList()
 	form = PlatformForm(request.POST)
@@ -74,10 +73,9 @@ def purchaseAll(request):
 	newPurchase = Purchase(pTime=ptime,userId=user,platform=platformObj)
 	newPurchase.save()
 	newPurchase.addGame(cart)
-	
-	
-	cart.delete()
-	return render(request, 'fume/featured.html', {})
+
+	cart.clearCart()
+	return redirect('featured')
 
 def tagedit(request, game_id):
 	tag_id=game_id
@@ -90,6 +88,7 @@ def home(request):
 @login_required
 def addtag(request, game_id):
 	user = request.user
+	print(user)
 	print ("adding tag")
 # if this is a POST request we need to process the form data
 	if request.method == 'POST':
@@ -118,11 +117,11 @@ def addtag(request, game_id):
 	else:
 		return redirect('games',game_id=game_id)
 
-
+@login_required
 def featured(request):
 
 	currentUser = request.user
-	
+	print(currentUser)
 	### Get a list of tags from user purchase history ###
 	# Create a tag list
 	tagList = []
@@ -149,9 +148,12 @@ def featured(request):
 	# Sort similarity_dic according to count
 	sorted_tup = sorted(similarity_dic.items(), key=operator.itemgetter(1))
 
-
+	#get reward count
+	rewards=Reward.objects.get(user=currentUser).count()
+	
+	print(sorted_tup)
 	# Put four games into rcmdList
 	for i in [0,1,2,3]:
-		rcmdList[i] = sorted_tup[len(sorted_tup)-i-1][0]
+		rcmdList.append(sorted_tup[len(sorted_tup)-i-1][0])
 
-	return render(request, 'fume/featured.html', rcmdList)
+	return render(request, 'fume/featured.html', {'rcmdList':rcmdList, 'rewards': rewards})
