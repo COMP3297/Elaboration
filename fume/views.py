@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform
+from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform,getUserPurchaseHistory
 from fume.forms import LoginForm,NameForm,PlatformForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -14,6 +14,9 @@ from django.contrib.auth.decorators import login_required
 
 	
 def featured(request):
+	user = request.user
+	purchasehis=getUserPurchaseHistory(user)
+	print(purchasehis)
 	return render(request, 'fume/featured.html', {})
 	
 def signup(request):
