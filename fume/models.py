@@ -4,6 +4,22 @@ from django.db import models
 from PIL import Image
 
 
+def getUserPurchaseHistory(user):     #take a user object as argument
+    #this function is to get the purchase history of a user
+    purchases = Purchase.objects.filter(userId=user).all()
+    purchaselist = list(purchases)
+    gamePurchased = []
+    for p in purchaselist:
+        games = p.game.all()
+        for g in games:
+            theGame = Game.objects.get(game=g)
+            if theGame in gamePurchased:
+                print("already in ")
+            else:
+                gamePurchased.append(theGame)
+
+    return gamePurchased
+
 # Create your models here.
 class Game(models.Model):
     game = models.CharField(max_length=200,blank=True, null=True)
