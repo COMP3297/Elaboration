@@ -106,7 +106,7 @@ class Cart(models.Model):
 class Reward(models.Model):
     user = models.ForeignKey(User,blank=True,null=True)
     timeReceived = models.DateTimeField(blank=True, null=True)
-    amount = models.CharField(max_length=200)
+    amount = models.DecimalField(max_digits=5, decimal_places=2,blank=True, null=True)
 
     def receiveReward(self):                    # to record the time when the reward is received
             self.timeReceived = timezone.now()

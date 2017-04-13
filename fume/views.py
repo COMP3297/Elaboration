@@ -45,7 +45,7 @@ def purchase(request, game_id):
 
 	newgame=Game.objects.get(game_id=game_id)
 	user = request.user
-	print(user)
+	print(user)	
 	try:
 		this_cart = Cart.objects.get(user = user)
 	except:
@@ -149,8 +149,11 @@ def featured(request):
 	sorted_tup = sorted(similarity_dic.items(), key=operator.itemgetter(1))
 
 	print(sorted_tup)
-	# Put four games into rcmdList
-	for i in [0,1,2,3]:
-		rcmdList.append(sorted_tup[len(sorted_tup)-i-1][0])
+	# Put four games into rcmdList if the game is not yet purchased
+	i = 0
+	while len(rcmdList) < 4:
+		if sorted_tup[len(sorted_tup)-i-1][0] not in purchasedList:
+			rcmdList.append(sorted_tup[len(sorted_tup)-i-1][0])
+		i += 1
 
 	return render(request, 'fume/featured.html', {'rcmdList':rcmdList})
