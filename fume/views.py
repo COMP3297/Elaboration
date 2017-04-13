@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform,getUserPurchaseHistory
+from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform,getUserPurchaseHistory, Reward
 from fume.forms import LoginForm,NameForm,PlatformForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -148,6 +148,9 @@ def featured(request):
 	# Sort similarity_dic according to count
 	sorted_tup = sorted(similarity_dic.items(), key=operator.itemgetter(1))
 
+	#Print Rewards
+	rewards=Reward.object.get(user=currentUser)
+
 	print(sorted_tup)
 	# Put four games into rcmdList if the game is not yet purchased
 	i = 0
@@ -156,4 +159,4 @@ def featured(request):
 			rcmdList.append(sorted_tup[len(sorted_tup)-i-1][0])
 		i += 1
 
-	return render(request, 'fume/featured.html', {'rcmdList':rcmdList})
+	return render(request, 'fume/featured.html', {'rcmdList':rcmdList, 'reward':rewards})
