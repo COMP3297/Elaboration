@@ -163,6 +163,6 @@ def featured(request):
 
 	# Put four games into rcmdList
 	for i in [0,1,2,3]:
-		rcmdList[i] = sorted_tup[len(sorted_tup)-i-1][0]
+		rcmdList.append(sorted_tup[len(sorted_tup)-i-1][0])
 
-	return render(request, 'fume/featured.html', rcmdList)
+	return render(request, 'fume/featured.html', {'rcmdList':rcmdList})
