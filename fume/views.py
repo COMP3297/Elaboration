@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform,getUserPurchaseHistory
+from fume.models import Game,Cart,Tag,User,Recommendation,Purchase,Platform
 from fume.forms import LoginForm,NameForm,PlatformForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -126,10 +126,19 @@ def featured(request):
 	### Get a list of tags from user purchase history ###
 	# Create a tag list
 	tagList = []
-	# Call the function to get purchase history
-	purchasedList = getUserPurchaseHistory(currentUser)
+	
+	# Get purchase history
+	purchaseList = list(Purchase.objects.filter(userId=request.user).all())
+	gamePurchasedList = []
+	for p in purchaseList:
+		games = p.game.all()
+		for g in games:
+			theGame = Game.objects.get(game=g)
+			if theGame not in gamePurchased:
+				gamePurchased.append(theGame)
+	
 	# Put all the related tags into tagList
-	for eachPurchasedGame in purchasedList:
+	for eachPurchasedGame in gamePurchasedList:
 		for eachRelatedTag in eachPurchasedGame.tag_set.all():
 			if eachRelatedTag not in tagList:
 				tagList.append(eachRelatedTag)
@@ -137,17 +146,21 @@ def featured(request):
 	### Look for four games that are most affliated with the tags ###
 	# Create a recommendation list
 	rcmdList = []
+	
 	# Create and initialize a dictionary for similarity count
 	similarity_dic = {}
 	gameList = Game.objects.all()
 	for eachGame in gameList:
 		similarity_dic[eachGame] = 0
+
 	# Start counting
 	for eachTag in tagList:
 		for eachGame in eachTag.game.all():
 			similarity_dic[eachGame] += 1
+
 	# Sort similarity_dic according to count
 	sorted_tup = sorted(similarity_dic.items(), key=operator.itemgetter(1))
+
 	# Put at most four games into rcmdList
 	i = 0
 	while i <= len(sorted_tup) and i <= 3:
