@@ -2,6 +2,12 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from PIL import Image
+def getUserPurchaseHistory(user):     #take a user object as argument
+    #this function is to get the purchase history of a user
+    purchases = Purchase.objects.fliter(userId=user)
+    return purchases
+
+
 
 
 # Create your models here.
@@ -23,7 +29,14 @@ class Game(models.Model):
             except:
                 tag_obj = Tag(tag=tag,creator=creator)
                 tag_obj.save()
-            tag_obj.game.add(this_game)
+            tag_obj.game.add(self)
+    def relatedTags(self):
+            tags = Tag.objects.filter(game=self)
+            tagcontext = []
+            for t in tags:
+                tagcontext.append(t.tag)
+            return tagcontext
+
 class GameImage(models.Model):
     image = models.ImageField(upload_to='images',blank=True)
     game = models.ForeignKey(Game)
@@ -33,7 +46,7 @@ class GameImage(models.Model):
 
 class Tag(models.Model):
     tag = models.CharField(max_length=50,blank=True, null=True)
-    creator = models.CharField(max_length=200,blank=True, null=True)
+    creator = models.ForeignKey(User,blank=True, null=True)
     game = models.ManyToManyField(Game,blank=True)
     def __str__(self):
         return self.tag
