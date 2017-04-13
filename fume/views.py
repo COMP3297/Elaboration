@@ -97,7 +97,7 @@ def getRcmdList(tagList):
 	
 def featured(request):
 	# Get a list of tags from user purchase history
-	
+	tagList = []
 	# Look for games that are affliated with the tags
 	rcmdList = []
 	for eachTag in tagList:
